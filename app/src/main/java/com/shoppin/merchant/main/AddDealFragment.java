@@ -242,9 +242,9 @@ public class AddDealFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if (!etOrgPrice.getText().toString().equals("")) {
                     if (!etDiscOffr.getText().toString().equals("")) {
-                        int percentage = Integer.parseInt(etDiscOffr.getText().toString());
-                        int originalPrice = Integer.parseInt(etOrgPrice.getText().toString());
-                        int discPrice = originalPrice - (originalPrice * percentage)/100;
+                        long percentage = Long.parseLong(etDiscOffr.getText().toString());
+                        long originalPrice = Long.parseLong(etOrgPrice.getText().toString());
+                        long discPrice = originalPrice - (originalPrice * percentage)/100;
 
                         etOffPrice.setText(String.valueOf(discPrice));
                     }
@@ -253,6 +253,27 @@ public class AddDealFragment extends Fragment {
         });
 
         etDiscOffr = (EditText) view.findViewById(R.id.input_disc_offr);
+        etDiscOffr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!etDiscOffr.getText().toString().equals("")) {
+                    int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                    if (discount > 100) {
+                        Toast.makeText(getActivity(), "Discount percentage(%) should not be more than 100", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 
         etStartTime = (EditText) view.findViewById(R.id.input_start_time);
         etStartTime.setClickable(true);
@@ -443,6 +464,12 @@ public class AddDealFragment extends Fragment {
 
                 if(etDiscOffr.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"Discount offer should not be empty",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                if(discount > 100){
+                    Toast.makeText(getActivity(),"Discount percentage should not be more than 100",Toast.LENGTH_LONG).show();
                     return;
                 }
 

@@ -155,6 +155,7 @@ public class SplashActivity extends AppCompatActivity {
                         });
 
                     }else{
+                        ModuleClass.isInternetOn = true;
                         if (ModuleClass.appPreferences.getBoolean(ModuleClass.KEY_IS_REMEMBER, false)) {
                             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -179,6 +180,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.v("Notification","On Activity result called");
 
         final ConnectivityManager connectivity = (ConnectivityManager) SplashActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -253,14 +256,16 @@ public class SplashActivity extends AppCompatActivity {
 
                 checkInternetInLollipop();
 
-                Runnable timeoutThread = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    Runnable timeoutThread = new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            Log.v("Notification", "Internet is on : " + ModuleClass.isInternetOn);
                             if (!ModuleClass.isInternetOn) {
                                 SplashActivity.this.runOnUiThread(new Runnable() {
                                     @Override
@@ -276,10 +281,11 @@ public class SplashActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                    }
-                };
+                        }
+                    };
 
-                timeoutThread.run();
+                    timeoutThread.run();
+                }
 
             } else {
                 ModuleClass.isInternetOn = new ConnectionDetector(SplashActivity.this).isConnectingToInternet();
