@@ -54,8 +54,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -293,17 +296,40 @@ public class EditDealFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if (!etOrgPrice.getText().toString().equals("")) {
                     if (!etDiscOffr.getText().toString().equals("")) {
-                        int percentage = Integer.parseInt(etDiscOffr.getText().toString());
-                        int originalPrice = Integer.parseInt(etOrgPrice.getText().toString());
-                        int discPrice = originalPrice - (originalPrice * percentage) / 100;
+                        long percentage = Long.parseLong(etDiscOffr.getText().toString());
+                        long originalPrice = Long.parseLong(etOrgPrice.getText().toString());
+                        long discPrice = originalPrice - (originalPrice * percentage)/100;
 
                         etOffPrice.setText(String.valueOf(discPrice));
                     }
+                }else{
+                    etOffPrice.setText("");
                 }
             }
         });
 
         etDiscOffr = (EditText) view.findViewById(R.id.input_disc_offr);
+        etDiscOffr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!etDiscOffr.getText().toString().equals("")) {
+                    int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                    if (discount > 100) {
+                        Toast.makeText(getActivity(), "Discount percentage(%) should not be more than 100", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 
         rgDealLocation = (RadioGroup) view.findViewById(R.id.rgDealLocation);
         rgDealUsage = (RadioGroup) view.findViewById(R.id.rgDealUsage);
@@ -447,14 +473,41 @@ public class EditDealFragment extends Fragment {
                     return;
                 }
 
+                int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                if(discount > 100){
+                    Toast.makeText(getActivity(),"Discount percentage should not be more than 100",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (etOrgPrice.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Original price should not be empty", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                long orgPrice = Long.parseLong(etOrgPrice.getText().toString());
+                if(orgPrice == 0){
+                    Toast.makeText(getActivity(), "Original price should not be zero", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (etOffPrice.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Discount price should not be empty", Toast.LENGTH_LONG).show();
                     return;
+                }
+
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                try {
+                    Date startDate = sdf.parse(etStartDate.getText().toString()+" "+etStartTime.getText().toString());
+                    Date endDate = sdf.parse(etEndDate.getText().toString()+" "+etEndTime.getText().toString());
+                    if(endDate.compareTo(startDate) < 0){
+                        Log.v("Notification","End date time before start time");
+                        return;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
                 String shopId = adapter.getSelectedId();
@@ -469,7 +522,6 @@ public class EditDealFragment extends Fragment {
                     Toast.makeText(getActivity(), "Select Days for deal", Toast.LENGTH_LONG).show();
                     return;
                 }
-
 
                 if (ModuleClass.isInternetOn) {
                     new EditDealTask(dealDataModel.getDealId(), shopId, selectedCategory, selectedSubCategory, etDealTitle.getText().toString(),
@@ -514,6 +566,7 @@ public class EditDealFragment extends Fragment {
         }
     }
 
+
     public void showTimePickerDialog(View v) {
         TimePickerFragment newFragment = new TimePickerFragment();
         newFragment.setEditText((EditText) v);
@@ -544,6 +597,17 @@ public class EditDealFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             Log.v("Notification","Day : "+day+" month : "+month+" Year :"+year);
+
+            if(String.valueOf(month).length() == 1){
+                month = Integer.parseInt("0"+month);
+            }
+            Log.v("Notification","Month after adding :"+month);
+
+            if(String.valueOf(day).length() == 1){
+                day = Integer.parseInt("0"+day);
+            }
+            Log.v("Notification","Day after adding :"+day);
+
             if(isStartDateClicked) {
                 Calendar my = Calendar.getInstance();
                 my.set(year, month, day);
@@ -658,7 +722,7 @@ public class EditDealFragment extends Fragment {
             }
         }
 
-        if (data.getDiscountType().equals("0")) {
+        /*if (data.getDiscountType().equals("0")) {
             if (!data.getDealAmount().equals("") && !data.getDiscountValue().equals("")) {
                 double orgPrice = Double.parseDouble(data.getDealAmount());
                 double offrPrice = Double.parseDouble(data.getDiscountValue());
@@ -670,7 +734,7 @@ public class EditDealFragment extends Fragment {
         } else if (data.getDiscountType().equals("1")) {
             etDiscOffr.setText(data.getDiscountValue());
             etOrgPrice.setText(data.getDealAmount());
-        }
+        }*/
 
         String[] selectedArray = dealDataModel.getAllDays().split(",");
         int[] selectedIndices = new int[selectedArray.length];

@@ -242,17 +242,40 @@ public class AddDealFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if (!etOrgPrice.getText().toString().equals("")) {
                     if (!etDiscOffr.getText().toString().equals("")) {
-                        int percentage = Integer.parseInt(etDiscOffr.getText().toString());
-                        int originalPrice = Integer.parseInt(etOrgPrice.getText().toString());
-                        int discPrice = originalPrice - (originalPrice * percentage)/100;
+                        long percentage = Long.parseLong(etDiscOffr.getText().toString());
+                        long originalPrice = Long.parseLong(etOrgPrice.getText().toString());
+                        long discPrice = originalPrice - (originalPrice * percentage)/100;
 
                         etOffPrice.setText(String.valueOf(discPrice));
                     }
+                }else{
+                    etOffPrice.setText("");
                 }
             }
         });
 
         etDiscOffr = (EditText) view.findViewById(R.id.input_disc_offr);
+        etDiscOffr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!etDiscOffr.getText().toString().equals("")) {
+                    int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                    if (discount > 100) {
+                        Toast.makeText(getActivity(), "Discount percentage(%) should not be more than 100", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 
         etStartTime = (EditText) view.findViewById(R.id.input_start_time);
         etStartTime.setClickable(true);
@@ -446,6 +469,12 @@ public class AddDealFragment extends Fragment {
                     return;
                 }
 
+                int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                if(discount > 100){
+                    Toast.makeText(getActivity(),"Discount percentage should not be more than 100",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(etOrgPrice.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"Original price should not be empty",Toast.LENGTH_LONG).show();
                     return;
@@ -606,6 +635,15 @@ public class AddDealFragment extends Fragment {
 
                 if (my.compareTo(Calendar.getInstance()) >= 0) {
                     if (editText != null) {
+                        if(String.valueOf(month).length() == 1){
+                            month = Integer.parseInt("0"+month);
+                        }
+                        Log.v("Notification","Month after adding :"+month);
+
+                        if(String.valueOf(day).length() == 1){
+                            day = Integer.parseInt("0"+day);
+                        }
+                        Log.v("Notification","Day after adding :"+day);
                         editText.setText(year + "-" + month + "-" + day);
                     }
                 } else {

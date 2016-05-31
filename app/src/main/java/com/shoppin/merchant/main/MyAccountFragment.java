@@ -290,10 +290,10 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener 
     public void updateDetail(JSONObject object){
 
         try {
-            Log.v("Notification","Customer name : "+object.getString("customer_name"));
-            tvName.setText(object.getString("customer_name"));
-            tvMobile.setText(object.getString("customer_mobile"));
-            tvEmail.setText(object.getString("customer_email"));
+            Log.v("Notification","Customer name : "+object.getString("merchant_name"));
+            tvName.setText(object.getString("merchant_name"));
+            tvMobile.setText(object.getString("merchant_mobile"));
+            tvEmail.setText(object.getString("merchant_email"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -465,7 +465,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener 
 
             ArrayList<NameValuePair> inputArray = new ArrayList<>();
             inputArray.add(new BasicNameValuePair("webmethod", "edit_profile"));
-            inputArray.add(new BasicNameValuePair("id", ModuleClass.MERCHANT_ID));
+            inputArray.add(new BasicNameValuePair("merchant_id", ModuleClass.MERCHANT_ID));
             inputArray.add(new BasicNameValuePair("name",name));
             inputArray.add(new BasicNameValuePair("mobile", mobile));
 

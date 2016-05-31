@@ -206,6 +206,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            if(toolbar != null){
+                toolbar.setTitle("Home");
+            }
             // Handle the camera action
             Fragment fragment = new OfferFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -320,6 +323,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             MainActivity.this.finish();
         } else if (id == R.id.nav_my_account) {
+            if(toolbar != null){
+                toolbar.setTitle("My Profile");
+            }
             Fragment fragment = new MyAccountFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Bundle args = new Bundle();
