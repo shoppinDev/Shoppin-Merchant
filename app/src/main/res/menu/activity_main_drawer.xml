@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icon_home"
+            android:title="Home"
+            android:checked="true"/>
+
+        <item
+            android:id="@+id/nav_add_shop"
+            android:icon="@drawable/icon_shop"
+            android:title="Add Shop"
+            />
+
+        <item
+            android:id="@+id/nav_add_deal"
+            android:icon="@drawable/icon_add_deal"
+            android:title="Add Deal" />
+
+        <item
+            android:id="@+id/nav_starred"
+            android:icon="@drawable/icon_star"
+            android:title="Starred" />
+
+        <item
+            android:id="@+id/nav_my_deals"
+            android:icon="@drawable/icon_deal"
+            android:title="My Deals" />
+
+        <item
+            android:id="@+id/nav_my_shops"
+            android:icon="@drawable/icon_shop"
+            android:title="My Shops" />
+
+        <item
+            android:id="@+id/nav_draft"
+            android:icon="@drawable/icon_draft"
+            android:title="Draft" />
+        <item
+            android:id="@+id/nav_all_purchases"
+            android:icon="@drawable/icon_purchase1"
+            android:title="All Purchases" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/icon_notification"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/nav_rewards"
+            android:icon="@drawable/icon_reward"
+            android:title="Rewards" />
+
+    </group>
+
+    <group android:checkableBehavior="single" >
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/icon_help"
+            android:title="Help" />
+
+        <item
+            android:id="@+id/nav_my_account"
+            android:icon="@drawable/icon_user"
+            android:title="My Profile" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/icon_logout"
+            android:title="Logout" />
+    </group>
+
+
+    <!--item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item-->
+
+</menu>
