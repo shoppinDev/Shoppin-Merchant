@@ -503,6 +503,7 @@ public class EditDealFragment extends Fragment {
                     Date endDate = sdf.parse(etEndDate.getText().toString()+" "+etEndTime.getText().toString());
                     if(endDate.compareTo(startDate) < 0){
                         Log.v("Notification","End date time before start time");
+                        Toast.makeText(getActivity(),"please enter valid end date and time",Toast.LENGTH_LONG).show();
                         return;
                     }
 
@@ -597,16 +598,21 @@ public class EditDealFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             Log.v("Notification","Day : "+day+" month : "+month+" Year :"+year);
+            month = month+1;
 
-            if(String.valueOf(month).length() == 1){
-                month = Integer.parseInt("0"+month);
-            }
-            Log.v("Notification","Month after adding :"+month);
+            String monthStr = ""+month;
+            String dayStr = ""+day;
 
-            if(String.valueOf(day).length() == 1){
-                day = Integer.parseInt("0"+day);
+            if(monthStr.length() == 1){
+                monthStr = "0"+month;
             }
-            Log.v("Notification","Day after adding :"+day);
+            Log.v("Notification","Month after adding :"+monthStr);
+
+            if(dayStr.length() == 1){
+                dayStr = "0"+day;
+            }
+            Log.v("Notification","Day after adding :"+dayStr);
+
 
             if(isStartDateClicked) {
                 Calendar my = Calendar.getInstance();
@@ -615,7 +621,8 @@ public class EditDealFragment extends Fragment {
 
                 if (my.compareTo(Calendar.getInstance()) >= 0) {
                     if (editText != null) {
-                        editText.setText(year + "-" + month + "-" + day);
+
+                        editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 } else {
                     Toast.makeText(getActivity(),"Please select date after today date", Toast.LENGTH_LONG).show();
@@ -623,7 +630,7 @@ public class EditDealFragment extends Fragment {
             }else if(isEndDateClicked){
                 if(compareEndDateWithStartDate(year,month,day,etStartDate,getActivity())){
                     if (editText != null) {
-                        editText.setText(year + "-" + month + "-" + day);
+                        editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 }else{
                     Toast.makeText(getActivity(),"Please select date after Start date", Toast.LENGTH_LONG).show();
@@ -648,16 +655,26 @@ public class EditDealFragment extends Fragment {
             Log.v("Notification","End Date year : "+startDateYear+" month :"+startDateMonth+" day : "+startDateDay);
 
             Calendar startDateCal = Calendar.getInstance();
-            startDateCal.set(startDateYear,startDateMonth,startDateDay);
+            //startDateCal.set(startDateYear,startDateMonth,startDateDay);
+            int yearCur = startDateCal.get(Calendar.YEAR);
+            int monthCur = startDateCal.get(Calendar.MONTH);
+            int dayCur = startDateCal.get(Calendar.DAY_OF_MONTH);
+            startDateCal.set(yearCur,monthCur,dayCur);
+
+            Log.v("Notification","Current date instance : "+startDateCal.getTime().toString());
 
             Calendar my = Calendar.getInstance();
             my.set(year,month,day);
 
-            if(my.compareTo(startDateCal) >= 0){
+            Log.v("Notification","Selected date instance : "+my.getTime().toString());
+
+            Log.v("Notification","Compare end date and Current date : "+my.compareTo(startDateCal));
+
+            if(startDateCal.compareTo(my) >= 0){
                 isDateValid = true;
             }else{
                 Log.v("Notification","End date should not be set before end date");
-                Toast.makeText(context,"End date should not be set before end date",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"End date should not be set before current date",Toast.LENGTH_LONG).show();
                 isDateValid = false;
             }
         }else{

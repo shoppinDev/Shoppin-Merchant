@@ -53,8 +53,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -434,16 +437,6 @@ public class AddDealFragment extends Fragment {
                     return;
                 }
 
-                /*if(etDiscPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Discount Price field should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }*/
-
-                /*if(etDealPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Deal Price field should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }*/
-
                 if(etStartTime.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"Start time field should not be empty",Toast.LENGTH_LONG).show();
                     return;
@@ -485,6 +478,20 @@ public class AddDealFragment extends Fragment {
                     return;
                 }
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                try {
+                    Date startDate = sdf.parse(etStartDate.getText().toString()+" "+etStartTime.getText().toString());
+                    Date endDate = sdf.parse(etEndDate.getText().toString()+" "+etEndTime.getText().toString());
+                    if(endDate.compareTo(startDate) < 0){
+                        Log.v("Notification","End date time before start time");
+                        Toast.makeText(getActivity(),"please enter valid end date and time",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 String shopId = adapter.getSelectedId();
 
@@ -628,6 +635,22 @@ public class AddDealFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             Log.v("Notification","Day : "+day+" month : "+month+" Year :"+year);
+            month = month+1;
+
+            String monthStr = ""+month;
+            String dayStr = ""+day;
+
+            if(monthStr.length() == 1){
+                monthStr = "0"+month;
+            }
+            Log.v("Notification","Month after adding :"+monthStr);
+
+            if(dayStr.length() == 1){
+                dayStr = "0"+day;
+            }
+            Log.v("Notification","Day after adding :"+dayStr);
+
+
             if(isStartDateClicked) {
                 Calendar my = Calendar.getInstance();
                 my.set(year, month, day);
@@ -635,16 +658,8 @@ public class AddDealFragment extends Fragment {
 
                 if (my.compareTo(Calendar.getInstance()) >= 0) {
                     if (editText != null) {
-                        if(String.valueOf(month).length() == 1){
-                            month = Integer.parseInt("0"+month);
-                        }
-                        Log.v("Notification","Month after adding :"+month);
 
-                        if(String.valueOf(day).length() == 1){
-                            day = Integer.parseInt("0"+day);
-                        }
-                        Log.v("Notification","Day after adding :"+day);
-                        editText.setText(year + "-" + month + "-" + day);
+                        editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 } else {
                     Toast.makeText(getActivity(),"Please select date after today date", Toast.LENGTH_LONG).show();
@@ -652,7 +667,7 @@ public class AddDealFragment extends Fragment {
             }else if(isEndDateClicked){
                 if(compareEndDateWithStartDate(year,month,day,etStartDate,getActivity())){
                     if (editText != null) {
-                        editText.setText(year + "-" + month + "-" + day);
+                        editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 }else{
                     Toast.makeText(getActivity(),"Please select date after Start date", Toast.LENGTH_LONG).show();

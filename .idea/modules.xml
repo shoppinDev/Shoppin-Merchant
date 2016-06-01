@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Shoppin-Merchant.iml" filepath="$PROJECT_DIR$/Shoppin-Merchant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShoppinMerchant.iml" filepath="$PROJECT_DIR$/ShoppinMerchant.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
