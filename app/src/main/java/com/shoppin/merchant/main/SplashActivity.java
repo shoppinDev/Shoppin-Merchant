@@ -257,6 +257,7 @@ public class SplashActivity extends AppCompatActivity {
                 checkInternetInLollipop();
 
                 if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+<<<<<<< HEAD
                     Runnable timeoutThread = new Runnable() {
                         @Override
                         public void run() {
@@ -265,6 +266,16 @@ public class SplashActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+=======
+                Runnable timeoutThread = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+>>>>>>> origin/master
                             Log.v("Notification", "Internet is on : " + ModuleClass.isInternetOn);
                             if (!ModuleClass.isInternetOn) {
                                 SplashActivity.this.runOnUiThread(new Runnable() {
@@ -284,7 +295,11 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     };
 
+<<<<<<< HEAD
                     timeoutThread.run();
+=======
+                timeoutThread.run();
+>>>>>>> origin/master
                 }
 
             } else {

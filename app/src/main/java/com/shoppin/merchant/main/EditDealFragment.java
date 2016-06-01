@@ -54,8 +54,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -299,6 +302,8 @@ public class EditDealFragment extends Fragment {
 
                         etOffPrice.setText(String.valueOf(discPrice));
                     }
+                }else{
+                    etOffPrice.setText("");
                 }
             }
         });
@@ -479,9 +484,30 @@ public class EditDealFragment extends Fragment {
                     return;
                 }
 
+                long orgPrice = Long.parseLong(etOrgPrice.getText().toString());
+                if(orgPrice == 0){
+                    Toast.makeText(getActivity(), "Original price should not be zero", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (etOffPrice.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Discount price should not be empty", Toast.LENGTH_LONG).show();
                     return;
+                }
+
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                try {
+                    Date startDate = sdf.parse(etStartDate.getText().toString()+" "+etStartTime.getText().toString());
+                    Date endDate = sdf.parse(etEndDate.getText().toString()+" "+etEndTime.getText().toString());
+                    if(endDate.compareTo(startDate) < 0){
+                        Log.v("Notification","End date time before start time");
+                        return;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
                 String shopId = adapter.getSelectedId();
@@ -496,7 +522,6 @@ public class EditDealFragment extends Fragment {
                     Toast.makeText(getActivity(), "Select Days for deal", Toast.LENGTH_LONG).show();
                     return;
                 }
-
 
                 if (ModuleClass.isInternetOn) {
                     new EditDealTask(dealDataModel.getDealId(), shopId, selectedCategory, selectedSubCategory, etDealTitle.getText().toString(),
@@ -541,6 +566,7 @@ public class EditDealFragment extends Fragment {
         }
     }
 
+
     public void showTimePickerDialog(View v) {
         TimePickerFragment newFragment = new TimePickerFragment();
         newFragment.setEditText((EditText) v);
@@ -571,6 +597,17 @@ public class EditDealFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             Log.v("Notification","Day : "+day+" month : "+month+" Year :"+year);
+
+            if(String.valueOf(month).length() == 1){
+                month = Integer.parseInt("0"+month);
+            }
+            Log.v("Notification","Month after adding :"+month);
+
+            if(String.valueOf(day).length() == 1){
+                day = Integer.parseInt("0"+day);
+            }
+            Log.v("Notification","Day after adding :"+day);
+
             if(isStartDateClicked) {
                 Calendar my = Calendar.getInstance();
                 my.set(year, month, day);
@@ -685,7 +722,7 @@ public class EditDealFragment extends Fragment {
             }
         }
 
-        if (data.getDiscountType().equals("0")) {
+        /*if (data.getDiscountType().equals("0")) {
             if (!data.getDealAmount().equals("") && !data.getDiscountValue().equals("")) {
                 double orgPrice = Double.parseDouble(data.getDealAmount());
                 double offrPrice = Double.parseDouble(data.getDiscountValue());
@@ -697,7 +734,7 @@ public class EditDealFragment extends Fragment {
         } else if (data.getDiscountType().equals("1")) {
             etDiscOffr.setText(data.getDiscountValue());
             etOrgPrice.setText(data.getDealAmount());
-        }
+        }*/
 
         String[] selectedArray = dealDataModel.getAllDays().split(",");
         int[] selectedIndices = new int[selectedArray.length];

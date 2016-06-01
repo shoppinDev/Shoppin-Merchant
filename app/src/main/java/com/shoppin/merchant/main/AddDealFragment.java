@@ -248,6 +248,8 @@ public class AddDealFragment extends Fragment {
 
                         etOffPrice.setText(String.valueOf(discPrice));
                     }
+                }else{
+                    etOffPrice.setText("");
                 }
             }
         });
@@ -633,6 +635,15 @@ public class AddDealFragment extends Fragment {
 
                 if (my.compareTo(Calendar.getInstance()) >= 0) {
                     if (editText != null) {
+                        if(String.valueOf(month).length() == 1){
+                            month = Integer.parseInt("0"+month);
+                        }
+                        Log.v("Notification","Month after adding :"+month);
+
+                        if(String.valueOf(day).length() == 1){
+                            day = Integer.parseInt("0"+day);
+                        }
+                        Log.v("Notification","Day after adding :"+day);
                         editText.setText(year + "-" + month + "-" + day);
                     }
                 } else {
