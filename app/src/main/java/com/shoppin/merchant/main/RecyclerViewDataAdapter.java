@@ -87,14 +87,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         if (data.getIsActive().equals("0")) {
             holder.txtDealEnd.setEnabled(false);
             holder.txtDealEnd.setTextColor(context.getResources().getColor(R.color.light_grey));
-            //holder.txtRedeem.setEnabled(false);
-            //holder.txtRedeem.setTextColor(context.getResources().getColor(R.color.light_grey));
             holder.txtDealEnd.setText("Ended on " + data.getDealEndDate());
         } else {
             holder.txtDealEnd.setEnabled(true);
             holder.txtDealEnd.setTextColor(context.getResources().getColor(R.color.text_blue));
-            //holder.txtRedeem.setEnabled(true);
-            //holder.txtRedeem.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             holder.txtDealEnd.setText(getDiffTime( data.getDealEndDate()));
             if(!handlerHashMap.containsKey(data.getDealId())){
 

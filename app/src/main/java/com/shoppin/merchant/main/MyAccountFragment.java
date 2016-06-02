@@ -33,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -126,7 +128,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener 
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 if(etPassword.getText().toString().equals("")){
-                                    //tilPassword.setError("Please enter your password");
                                     Toast.makeText(getActivity(),"Please enter your password",Toast.LENGTH_LONG).show();
                                     return;
                                 }
@@ -231,15 +232,22 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener 
             updateEditButton();
 
         }else if(v.getId() == R.id.btnUpdate){
-            if(etName.getText().toString().equals("")){
+
+            if(etName.getText().toString().equals("") || etName.getText().toString().equals(" ") || etName.getText().toString().trim().length() <= 0){
                 Toast.makeText(getActivity(),"Please enter a Name",Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(etMobile.getText().toString().equals("")){
+            if(etMobile.getText().toString().equals("") || etMobile.getText().toString().equals(" ")){
                 Toast.makeText(getActivity(),"Please enter a Mobile number",Toast.LENGTH_LONG).show();
                 return;
             }
+
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(etName.getText().toString());
+            boolean found = matcher.find();
+            int mms=matcher.groupCount();
+            Log.v("Notification","Space count : "+mms+" Space found "+found);
 
             new UpdateMyAccountDetailTask(etName.getText().toString(),etMobile.getText().toString()).execute();
         }

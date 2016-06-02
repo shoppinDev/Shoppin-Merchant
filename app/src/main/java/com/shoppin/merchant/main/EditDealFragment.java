@@ -328,6 +328,16 @@ public class EditDealFragment extends Fragment {
                         Toast.makeText(getActivity(), "Discount percentage(%) should not be more than 100", Toast.LENGTH_LONG).show();
                     }
                 }
+
+                if(!etOrgPrice.getText().toString().equals("")){
+                    if (!etDiscOffr.getText().toString().equals("")) {
+                        long percentage = Long.parseLong(etDiscOffr.getText().toString());
+                        long originalPrice = Long.parseLong(etOrgPrice.getText().toString());
+                        long discPrice = originalPrice - (originalPrice * percentage)/100;
+
+                        etOffPrice.setText(String.valueOf(discPrice));
+                    }
+                }
             }
         });
 
@@ -598,13 +608,13 @@ public class EditDealFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             Log.v("Notification","Day : "+day+" month : "+month+" Year :"+year);
-            month = month+1;
+            //month = month+1;
 
-            String monthStr = ""+month;
+            String monthStr = ""+(month+1);
             String dayStr = ""+day;
 
             if(monthStr.length() == 1){
-                monthStr = "0"+month;
+                monthStr = "0"+(month+1);
             }
             Log.v("Notification","Month after adding :"+monthStr);
 
@@ -621,7 +631,6 @@ public class EditDealFragment extends Fragment {
 
                 if (my.compareTo(Calendar.getInstance()) >= 0) {
                     if (editText != null) {
-
                         editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 } else {
@@ -633,7 +642,7 @@ public class EditDealFragment extends Fragment {
                         editText.setText(year + "-" + monthStr + "-" + dayStr);
                     }
                 }else{
-                    Toast.makeText(getActivity(),"Please select date after Start date", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(),"Please select date after Start date", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -653,6 +662,7 @@ public class EditDealFragment extends Fragment {
             startDateDay = Integer.parseInt(dateArray[2]);
 
             Log.v("Notification","End Date year : "+startDateYear+" month :"+startDateMonth+" day : "+startDateDay);
+            Log.v("Notification","Selected Date year : "+year+" month :"+month+" day : "+day);
 
             Calendar startDateCal = Calendar.getInstance();
             //startDateCal.set(startDateYear,startDateMonth,startDateDay);
@@ -670,7 +680,7 @@ public class EditDealFragment extends Fragment {
 
             Log.v("Notification","Compare end date and Current date : "+my.compareTo(startDateCal));
 
-            if(startDateCal.compareTo(my) >= 0){
+            if(my.compareTo(startDateCal) >= 0){
                 isDateValid = true;
             }else{
                 Log.v("Notification","End date should not be set before end date");
