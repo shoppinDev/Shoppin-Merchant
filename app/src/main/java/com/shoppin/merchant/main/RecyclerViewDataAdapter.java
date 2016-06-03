@@ -84,9 +84,9 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         String discPrice = context.getResources().getString(R.string.Rs)+" "+data.getDiscountValue();
         holder.txtDiscPrice.setText(discPrice);
 
-        if (data.getIsActive().equals("0")) {
+        if (data.getIsActive().equals("0") || checkEndDateBeforeCurrentDate(data.getDealEndDate())) {
             holder.txtDealEnd.setEnabled(false);
-            holder.txtDealEnd.setTextColor(context.getResources().getColor(R.color.light_grey));
+            holder.txtDealEnd.setTextColor(context.getResources().getColor(R.color.lightTextColor));
             holder.txtDealEnd.setText("Ended on " + data.getDealEndDate());
         } else {
             holder.txtDealEnd.setEnabled(true);
@@ -161,5 +161,25 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         }
         //System.out.println(dateFormat);
         return dateFormat;
+    }
+
+    public boolean checkEndDateBeforeCurrentDate(String endDate){
+        String format = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date fromDate = null;
+        Date toDate = null;
+        try {
+            fromDate = new Date();
+            toDate = sdf.parse(endDate);
+
+            if(toDate.before(fromDate)){
+                return true;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

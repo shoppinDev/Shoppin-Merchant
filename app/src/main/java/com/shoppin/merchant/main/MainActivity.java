@@ -313,6 +313,14 @@ public class MainActivity extends AppCompatActivity
             if(toolbar != null){
                 toolbar.setTitle("Help");
             }
+
+            Fragment fragment = new HelpFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putInt("tab",1);
+            fragment.setArguments(args);
+            ft.replace(R.id.container,fragment);
+            ft.commit();
         } else if (id == R.id.nav_logout) {
             SharedPreferences.Editor editor = ModuleClass.appPreferences.edit();
             editor.remove(ModuleClass.KEY_IS_REMEMBER);
@@ -327,6 +335,28 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle("My Profile");
             }
             Fragment fragment = new MyAccountFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putInt("tab", 1);
+            fragment.setArguments(args);
+            ft.replace(R.id.container, fragment);
+            ft.commit();
+        }else if (id == R.id.nav_notifications) {
+            if(toolbar != null){
+                toolbar.setTitle("Notification");
+            }
+            Fragment fragment = new NotificationFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putInt("tab", 1);
+            fragment.setArguments(args);
+            ft.replace(R.id.container, fragment);
+            ft.commit();
+        }else if (id == R.id.nav_rewards) {
+            if(toolbar != null){
+                toolbar.setTitle("Reward");
+            }
+            Fragment fragment = new RewardFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Bundle args = new Bundle();
             args.putInt("tab", 1);

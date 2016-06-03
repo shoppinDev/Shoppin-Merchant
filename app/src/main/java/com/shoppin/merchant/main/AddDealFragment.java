@@ -250,6 +250,11 @@ public class AddDealFragment extends Fragment {
                         long discPrice = originalPrice - (originalPrice * percentage)/100;
 
                         etOffPrice.setText(String.valueOf(discPrice));
+
+                        long orgPrice = Long.parseLong(etOrgPrice.getText().toString());
+                        if(orgPrice == 0){
+                            Toast.makeText(getActivity(), "Original price should not be zero", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }else{
                     etOffPrice.setText("");
@@ -437,6 +442,33 @@ public class AddDealFragment extends Fragment {
                     return;
                 }
 
+                if(etDiscOffr.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Discount offer should not be empty",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                int discount = Integer.parseInt(etDiscOffr.getText().toString());
+                if(discount > 100){
+                    Toast.makeText(getActivity(),"Discount percentage should not be more than 100",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(etOrgPrice.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Original price should not be empty",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                long orgPrice = Long.parseLong(etOrgPrice.getText().toString());
+                if(orgPrice == 0){
+                    Toast.makeText(getActivity(), "Original price should not be zero", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(etOffPrice.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Discount price should not be empty",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(etDescription.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"Description should not be empty",Toast.LENGTH_LONG).show();
                     return;
@@ -464,33 +496,6 @@ public class AddDealFragment extends Fragment {
 
                 if(etEndDate.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"End Date field should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(etDiscOffr.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Discount offer should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                int discount = Integer.parseInt(etDiscOffr.getText().toString());
-                if(discount > 100){
-                    Toast.makeText(getActivity(),"Discount percentage should not be more than 100",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(etOrgPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Original price should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                long orgPrice = Long.parseLong(etOrgPrice.getText().toString());
-                if(orgPrice == 0){
-                    Toast.makeText(getActivity(), "Original price should not be zero", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(etOffPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Discount price should not be empty",Toast.LENGTH_LONG).show();
                     return;
                 }
 
