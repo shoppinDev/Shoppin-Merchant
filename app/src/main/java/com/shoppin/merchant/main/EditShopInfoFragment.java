@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shoppin.merchant.R;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class EditShopInfoFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,10 +51,10 @@ public class EditShopInfoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
     EditText etName,etAddressLine1,etCity,etZipCode,etCountry,etState,etLocationLatitude,etLocationLongitude,etEmailId,etMobile;
     Button btnAddShop;
     ShopModel shopData;
+    TextView tvShopHeader;
 
     public EditShopInfoFragment() {
         // Required empty public constructor
@@ -93,6 +95,9 @@ public class EditShopInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shop_info, container, false);
 
+        tvShopHeader = (TextView) view.findViewById(R.id.tvShopHeader);
+        tvShopHeader.setText("Edit Shop");
+
         etAddressLine1 = (EditText) view.findViewById(R.id.input_address_1);
         //etAddressLine2 = (EditText) view.findViewById(R.id.input_address_2);
         etCity = (EditText) view.findViewById(R.id.input_city);
@@ -106,6 +111,8 @@ public class EditShopInfoFragment extends Fragment {
         etZipCode = (EditText) view.findViewById(R.id.input_zip);
 
         btnAddShop = (Button) view.findViewById(R.id.btnAddShop);
+        btnAddShop.setText("Update Shop");
+
         btnAddShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

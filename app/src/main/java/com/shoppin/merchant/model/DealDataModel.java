@@ -11,6 +11,8 @@ public class DealDataModel implements Serializable{
     String discountValue,discountType,location,dealUsage,isActive,addedDate,categoryName,subCategoryName,merchantName,shopName;
     String qrImagePath;
     String countRedeem;
+    String shopAddress,shopLatitude,shopLongitude,shopDistance;
+    String originalValue;
 
     public DealDataModel(String dealId,String merchantId, String shopId, String dealCategory, String dealSubCategory, String dealTitle,
                   String dealDesc, String dealStartDate, String dealEndDate, String dealAmount, String allDays,String discountValue,
@@ -131,6 +133,46 @@ public class DealDataModel implements Serializable{
 
     public void setCountRedeem(String countRedeem) {
         this.countRedeem = countRedeem;
+    }
+
+    public void setOriginalValue(String originalValue) {
+        this.originalValue = originalValue;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public void setShopDistance(String shopDistance) {
+        this.shopDistance = shopDistance;
+    }
+
+    public void setShopLatitude(String shopLatitude) {
+        this.shopLatitude = shopLatitude;
+    }
+
+    public void setShopLongitude(String shopLongitude) {
+        this.shopLongitude = shopLongitude;
+    }
+
+    public String getShopDistance() {
+        return shopDistance;
+    }
+
+    public String getOriginalValue() {
+        return originalValue;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public String getShopLatitude() {
+        return shopLatitude;
+    }
+
+    public String getShopLongitude() {
+        return shopLongitude;
     }
 
     public String getCountRedeem() {

@@ -81,8 +81,16 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         Spannable spannable = (Spannable) holder.txtOgPrice.getText();
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, orgPrice.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        String discPrice = context.getResources().getString(R.string.Rs)+" "+data.getDiscountValue();
-        holder.txtDiscPrice.setText(discPrice);
+        if(data.getDiscountType().equals("1")){
+            long originalValue = Long.parseLong(data.getDealAmount());
+            long discountValue = Long.parseLong(data.getDiscountValue());
+            long discountPrice = originalValue - (originalValue/100 * discountValue);
+            String discPrice = context.getResources().getString(R.string.Rs)+" "+discountPrice;
+            holder.txtDiscPrice.setText(discPrice);
+        }else{
+            String discPrice = context.getResources().getString(R.string.Rs)+" "+data.getDiscountValue();
+            holder.txtDiscPrice.setText(discPrice);
+        }
 
         if (data.getIsActive().equals("0") || checkEndDateBeforeCurrentDate(data.getDealEndDate())) {
             holder.txtDealEnd.setEnabled(false);
@@ -93,9 +101,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
             holder.txtDealEnd.setTextColor(context.getResources().getColor(R.color.text_blue));
             holder.txtDealEnd.setText(getDiffTime( data.getDealEndDate()));
             if(!handlerHashMap.containsKey(data.getDealId())){
-
                 Handler handler = new Handler();
-
                 final Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -106,7 +112,6 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
                 handler.postDelayed(runnable,1000);
                 handlerHashMap.put(data.getDealId(),handler);
-
                 Timer timer = new Timer();
                 TimerTask timerTask = new TimerTask() {
                     @Override
@@ -115,8 +120,6 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
                     }
                 };
                 timer.schedule(timerTask, 0, 1000);
-
-
             }
         }
 

@@ -531,7 +531,7 @@ public class AddDealFragment extends Fragment {
                     new AddDealTask(shopId,selectedCategory,selectedSubCategory,etDealTitle.getText().toString(),
                             etDescription.getText().toString(),etStartDate.getText().toString()+" "+etStartTime.getText().toString(),
                             etEndDate.getText().toString()+" "+etEndTime.getText().toString(),
-                            days,selectedDealUsage,selectedDealLocation,selectedDiscount,etOffPrice.getText().toString(),etOrgPrice.getText().toString()).execute();
+                            days,selectedDealUsage,selectedDealLocation,"1",etOffPrice.getText().toString(),etOrgPrice.getText().toString()).execute();
                 }
             }
         });
@@ -623,7 +623,7 @@ public class AddDealFragment extends Fragment {
             // Do something with the time chosen by the user
             Log.v("Notification","Hours of day : "+hourOfDay+" Minute : "+minute);
             if(editText != null)
-                editText.setText(hourOfDay+":"+minute);
+                editText.setText(hourOfDay+":"+minute+":00");
         }
     }
 

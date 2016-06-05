@@ -167,7 +167,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener 
 
                 View dialogView = dialogChangePwd.getCustomView();
 
-
                 etPassword = (EditText) dialogView.findViewById(R.id.input_password);
                 etConfPassword = (EditText) dialogView.findViewById(R.id.input_conf_password);
                 etCurrPassword = (EditText) dialogView.findViewById(R.id.input_curr_password);

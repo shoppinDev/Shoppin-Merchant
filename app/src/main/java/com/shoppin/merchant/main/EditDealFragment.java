@@ -92,7 +92,7 @@ public class EditDealFragment extends Fragment {
 
     MultiSelectSpinner spinnerDays;
 
-    EditText etDealTitle, etDescription, etStartTime, etEndTime, etDealPrice, etDiscPrice, etEndDate, etOffPrice, etOrgPrice, etDiscOffr;
+    EditText etDealTitle, etDescription, etStartTime, etEndTime, etEndDate, etOffPrice, etOrgPrice, etDiscOffr;
 
     public static EditText etStartDate;
 
@@ -226,7 +226,7 @@ public class EditDealFragment extends Fragment {
 
         etDescription = (EditText) view.findViewById(R.id.input_deal_desc);
         etDealTitle = (EditText) view.findViewById(R.id.input_deal_title);
-        etDiscPrice = (EditText) view.findViewById(R.id.input_disc_value);
+        //etDiscPrice = (EditText) view.findViewById(R.id.input_disc_value);
         etStartTime = (EditText) view.findViewById(R.id.input_start_time);
         etStartTime.setClickable(true);
         etStartTime.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +272,7 @@ public class EditDealFragment extends Fragment {
                 showTimePickerDialog(v);
             }
         });
-        etDealPrice = (EditText) view.findViewById(R.id.input_deal_price);
+        //etDealPrice = (EditText) view.findViewById(R.id.input_deal_price);
 
         etOffPrice = (EditText) view.findViewById(R.id.input_off_price);
         etOrgPrice = (EditText) view.findViewById(R.id.input_original_price);
@@ -546,7 +546,7 @@ public class EditDealFragment extends Fragment {
                             etDescription.getText().toString(),
                             etStartDate.getText().toString() + " " + etStartTime.getText().toString(),
                             etEndDate.getText().toString() + " " + etEndTime.getText().toString(),
-                            days, selectedDealUsage, selectedDealLocation, selectedDiscount, etOffPrice.getText().toString(), etOrgPrice.getText().toString()).execute();
+                            days, selectedDealUsage, selectedDealLocation, "1", etOffPrice.getText().toString(), etOrgPrice.getText().toString()).execute();
                 }
 
             }
@@ -580,7 +580,7 @@ public class EditDealFragment extends Fragment {
             // Do something with the time chosen by the user
             Log.v("Notification", "Hours of day : " + hourOfDay + " Minute : " + minute);
             if (editText != null)
-                editText.setText(hourOfDay + ":" + minute);
+                editText.setText(hourOfDay + ":" + minute+":00");
         }
     }
 
@@ -713,9 +713,6 @@ public class EditDealFragment extends Fragment {
         etEndTime.setText(data.getDealEndDate());
         etDealTitle.setText(data.getDealTitle());
         etDescription.setText(data.getDealDesc());
-        etDealPrice.setText(data.getDealAmount());
-        etDiscPrice.setText(data.getDiscountValue());
-        etDealPrice.setText(data.getDealAmount());
 
         if (data.getDealUsage().equals("0")) {
             rbSingle.setChecked(true);
@@ -756,19 +753,22 @@ public class EditDealFragment extends Fragment {
             }
         }
 
-        /*if (data.getDiscountType().equals("0")) {
+        if (data.getDiscountType().equals("1")) {
             if (!data.getDealAmount().equals("") && !data.getDiscountValue().equals("")) {
-                double orgPrice = Double.parseDouble(data.getDealAmount());
-                double offrPrice = Double.parseDouble(data.getDiscountValue());
-                int percentage = (int) ((offrPrice / orgPrice) * 100);
-                Log.v("Notification", "Discount percentage : " + percentage + " Original Price : " + orgPrice + " Offr price:" + offrPrice);
-                etDiscOffr.setText(String.valueOf(percentage));
+                //double orgPrice = Double.parseDouble(data.getDealAmount());
+                //double offrPrice = Double.parseDouble(data.getDiscountValue());
+                //int percentage = (int) ((offrPrice / orgPrice) * 100);
+                //Log.v("Notification", "Discount percentage : " + percentage + " Original Price : " + orgPrice + " Offr price:" + offrPrice);
+                etDiscOffr.setText(data.getDiscountValue());
                 etOrgPrice.setText(data.getDealAmount());
             }
-        } else if (data.getDiscountType().equals("1")) {
-            etDiscOffr.setText(data.getDiscountValue());
+        } else if (data.getDiscountType().equals("0")) {
+            double orgPrice = Double.parseDouble(data.getDealAmount());
+            double offrPrice = Double.parseDouble(data.getDiscountValue());
+            int percentage = (int) ((offrPrice / orgPrice) * 100);
+            etDiscOffr.setText(""+percentage);
             etOrgPrice.setText(data.getDealAmount());
-        }*/
+        }
 
         String[] selectedArray = dealDataModel.getAllDays().split(",");
         int[] selectedIndices = new int[selectedArray.length];
@@ -786,9 +786,9 @@ public class EditDealFragment extends Fragment {
     public void clearField() {
         etDescription.setText("");
         etDealTitle.setText("");
-        etDiscPrice.setText("");
+        //etDiscPrice.setText("");
         etEndTime.setText("");
-        etDealPrice.setText("");
+        //etDealPrice.setText("");
         etStartTime.setText("");
         etEndDate.setText("");
         etStartDate.setText("");
@@ -807,7 +807,8 @@ public class EditDealFragment extends Fragment {
             new GetCategoryTask().execute();
         }
 
-        initView(dealDataModel);
+        if(dealDataModel != null)
+            initView(dealDataModel);
     }
 
     public void setUpData() {
@@ -1135,6 +1136,7 @@ public class EditDealFragment extends Fragment {
             inputArray.add(new BasicNameValuePair("location", location));
             inputArray.add(new BasicNameValuePair("discount_type", discountType));
             inputArray.add(new BasicNameValuePair("discount_value", discountValue));
+            inputArray.add(new BasicNameValuePair("deal_amount",dealAmount));
 
             JSONObject responseJSON = new JSONParser().makeHttpRequest(ModuleClass.LIVE_API_PATH + "merchant.php", "GET", inputArray);
             Log.d("Add Deal ", responseJSON.toString());

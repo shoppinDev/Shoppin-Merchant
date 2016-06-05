@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity
     ImageButton imgBtnClear;
     Toolbar toolbar;
     NavigationView navigationView;
-
     TextView tvHeader;
 
     @Override
@@ -183,14 +182,14 @@ public class MainActivity extends AppCompatActivity
 
             if(b.getBoolean("shop_added")){
                 if(navigationView != null) {
-                    onNavigationItemSelected(navigationView.getMenu().getItem(4));
+                    onNavigationItemSelected(navigationView.getMenu().getItem(5));
                     navigationView.setCheckedItem(R.id.nav_my_shops);
                     if (toolbar != null)
                         toolbar.setTitle("My Shops");
                 }
             }else if(b.getBoolean("deal_added")){
                 if(navigationView != null) {
-                    onNavigationItemSelected(navigationView.getMenu().getItem(3));
+                    onNavigationItemSelected(navigationView.getMenu().getItem(4));
                     navigationView.setCheckedItem(R.id.nav_my_deals);
                     if (toolbar != null)
                         toolbar.setTitle("My Deals");

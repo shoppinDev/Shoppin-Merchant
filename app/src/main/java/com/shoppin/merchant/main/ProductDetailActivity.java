@@ -76,6 +76,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (getIntent() != null)
             dealDataModel = (DealDataModel) getIntent().getSerializableExtra("deal_data");
 
+        Log.v("Notification","Deal Data : "+dealDataModel.getDealTitle());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,14 +148,21 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
             String orgPrice = getResources().getString(R.string.Rs) + " " + object.getString("dealamount");
-            //String orgPrice = getResources().getString(R.string.Rs) + " " + object.getString("orignal_value");
             tvDealOrgValue.setText(orgPrice, TextView.BufferType.SPANNABLE);
             Spannable spannable = (Spannable) tvDealOrgValue.getText();
             spannable.setSpan(STRIKE_THROUGH_SPAN, 0, orgPrice.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            //String discPrice = getResources().getString(R.string.Rs) + " " + object.getString("discountvalue");
-            String discPrice = getResources().getString(R.string.Rs) + " " + object.getString("orignal_value");
-            tvDealDiscValue.setText(discPrice);
+            if(object.getString("discounttype").equals("1")){
+                long originalValue = Long.parseLong(object.getString("dealamount"));
+                long discountValue = Long.parseLong(object.getString("discountvalue"));
+                long discountPrice = originalValue - (originalValue/100 * discountValue);
+                String discPrice = this.getResources().getString(R.string.Rs)+" "+discountPrice;
+                tvDealDiscValue.setText(discPrice);
+            }else{
+                String discPrice = getResources().getString(R.string.Rs) + " " + object.getString("discountvalue");
+                tvDealDiscValue.setText(discPrice);
+            }
+
 
             final double latitude = Double.parseDouble(object.getString("shop_latitude"));
             final double longitude = Double.parseDouble(object.getString("shop_longitude"));
@@ -219,6 +228,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             dialog.dismiss();
             if (success) {
                 updateDetail(resultObject);
+                dealDataModel = getDealListFromJson(resultObject);
             } else {
                 Toast.makeText(ProductDetailActivity.this, responseError, Toast.LENGTH_LONG).show();
             }
@@ -231,8 +241,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             inputArray.add(new BasicNameValuePair("webmethod", "deal_detail"));
             inputArray.add(new BasicNameValuePair("id", dealDataModel.getDealId()));
             inputArray.add(new BasicNameValuePair("userid", ModuleClass.MERCHANT_ID));
-            inputArray.add(new BasicNameValuePair("id", dealDataModel.getDealId()));
-            inputArray.add(new BasicNameValuePair("id", dealDataModel.getDealId()));
 
             double latitude = 0.0000;
             double longitude = 0.0000;
@@ -280,35 +288,38 @@ public class ProductDetailActivity extends AppCompatActivity {
         try {
 
             dealData = new DealDataModel(
-                    object.getString("deal_id"),
-                    object.getString("merchant_id"),
-                    object.getString("shop_id"),
-                    object.getString("deal_category"),
-                    object.getString("deal_subcategory"),
-                    object.getString("deal_title"),
-                    object.getString("deal_description"),
-                    object.getString("deal_startdate"),
-                    object.getString("deal_enddate"),
-                    object.getString("deal_amount"),
-                    object.getString("all_days"),
-                    object.getString("discount_value"),
-                    object.getString("discount_type"),
+                    object.getString("dealid"),
+                    object.getString("merchantid"),
+                    object.getString("shopid"),
+                    object.getString("dealcategory"),
+                    object.getString("dealsubcategory"),
+                    object.getString("dealtitle"),
+                    object.getString("dealdescription"),
+                    object.getString("dealstartdate"),
+                    object.getString("dealenddate"),
+                    object.getString("dealamount"),
+                    object.getString("alldays"),
+                    object.getString("discountvalue"),
+                    object.getString("discounttype"),
                     object.getString("location"),
-                    object.getString("deal_usage"),
-                    object.getString("is_active"),
-                    object.getString("added_date"),
-                    object.getString("category_name"),//category_name
-                    object.getString("subcategory_name"),//subcategory_name
-                    object.getString("merchant_name"),//merchant_name
-                    object.getString("shop_name")
+                    object.getString("dealusage"),
+                    object.getString("isactive"),
+                    object.getString("addeddate"),
+                    object.getString("categoryname"),//category_name
+                    object.getString("subcategoryname"),//subcategory_name
+                    object.getString("merchantname"),//merchant_name
+                    object.getString("shopname")
             );
-
-            dealData.setCountRedeem(object.getString("count_redeem"));
+            //dealData.setCountRedeem(object.getString("count_redeem"));
+            dealData.setShopAddress(object.getString("shop_addres"));
+            dealData.setShopLatitude(object.getString("shop_latitude"));
+            dealData.setShopLongitude(object.getString("shop_longitude"));
+            dealData.setShopDistance(object.getString("distance"));
+            dealData.setOriginalValue(object.getString("orignal_value"));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return dealData;
     }
 
