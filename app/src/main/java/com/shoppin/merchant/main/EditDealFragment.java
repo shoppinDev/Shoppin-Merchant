@@ -42,6 +42,7 @@ import android.widget.Toast;
 import com.shoppin.merchant.R;
 import com.shoppin.merchant.model.CategoryDataModel;
 import com.shoppin.merchant.model.DealDataModel;
+import com.shoppin.merchant.model.DraftsDataModel;
 import com.shoppin.merchant.model.ShopModel;
 import com.shoppin.merchant.model.SubCategoryDataModel;
 import com.shoppin.merchant.util.JSONParser;

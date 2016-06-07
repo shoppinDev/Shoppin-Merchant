@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -94,17 +96,30 @@ public class DraftsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_drafts, container, false);
         listDrafts = (ListView) view.findViewById(R.id.listDrafts);
-
         tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
-
         return view;
     }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle b = msg.getData();
+
+            if(b.getBoolean("deal_added")){
+                if(ModuleClass.isInternetOn){
+                    dealArrayList.clear();
+                    new GetDraftsTask().execute();
+                }
+            }
+        }
+    };
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if(ModuleClass.isInternetOn){
+
             new GetDraftsTask().execute();
         }
     }
@@ -162,7 +177,7 @@ public class DraftsFragment extends Fragment {
             dialog.dismiss();
             if(success){
                 if(dealArrayList.size() > 0){
-                    adapter = new DraftsListAdapter(getActivity(),android.R.layout.simple_list_item_multiple_choice,dealArrayList,getFragmentManager());
+                    adapter = new DraftsListAdapter(getActivity(),android.R.layout.simple_list_item_multiple_choice,dealArrayList,getFragmentManager(),handler);
                     listDrafts.setAdapter(adapter);
                 }else{
                     tvEmpty.setVisibility(View.VISIBLE);
