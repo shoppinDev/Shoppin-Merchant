@@ -2,6 +2,7 @@ package com.shoppin.merchant.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     NavigationView navigationView;
     TextView tvHeader;
+    FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         if(toolbar != null)
             toolbar.setTitle("Home");
 
+        fm = getSupportFragmentManager();
     }
 
     @Override
@@ -102,8 +106,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }
+
+        if(fm != null) {
+            if (fm.getBackStackEntryCount() == 0) {
+                this.finish();
+            } else {
+                fm.popBackStack();
+            }
         }
     }
 
@@ -326,9 +336,14 @@ public class MainActivity extends AppCompatActivity
             editor.remove(ModuleClass.KEY_MERCHANT_ID);
             editor.remove(ModuleClass.KEY_MERCHANT_NAME);
             editor.commit();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            //startActivity(intent);
             MainActivity.this.finish();
+            /*if(Build.VERSION.SDK_INT > 15)
+                this.finishAffinity();
+            else{
+                System.exit(0);
+            }*/
         } else if (id == R.id.nav_my_account) {
             if(toolbar != null){
                 toolbar.setTitle("My Profile");
@@ -395,4 +410,6 @@ public class MainActivity extends AppCompatActivity
             Log.e("SearchView", e.getMessage(), e);
         }
     }
+
+
 }

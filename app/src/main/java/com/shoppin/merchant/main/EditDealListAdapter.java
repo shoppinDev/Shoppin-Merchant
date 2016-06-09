@@ -79,6 +79,7 @@ public class EditDealListAdapter extends ArrayAdapter<DealDataModel> {
                 args.putSerializable("deal_data",data);
                 fragment.setArguments(args);
                 FragmentTransaction ft = fm.beginTransaction();
+                ft.addToBackStack("");
                 ft.replace(R.id.fragment_container,fragment);
                 ft.commit();
             }

@@ -547,7 +547,7 @@ public class EditDealFragment extends Fragment {
                             etDescription.getText().toString(),
                             etStartDate.getText().toString() + " " + etStartTime.getText().toString(),
                             etEndDate.getText().toString() + " " + etEndTime.getText().toString(),
-                            days, selectedDealUsage, selectedDealLocation, "1", etOffPrice.getText().toString(), etOrgPrice.getText().toString()).execute();
+                            days, selectedDealUsage, selectedDealLocation, "1", etDiscOffr.getText().toString(), etOrgPrice.getText().toString()).execute();
                 }
 
             }

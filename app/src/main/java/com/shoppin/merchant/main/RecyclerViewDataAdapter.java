@@ -82,9 +82,9 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, orgPrice.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         if(data.getDiscountType().equals("1")){
-            long originalValue = Long.parseLong(data.getDealAmount());
-            long discountValue = Long.parseLong(data.getDiscountValue());
-            long discountPrice = originalValue - (originalValue/100 * discountValue);
+            double originalValue = Double.parseDouble(data.getDealAmount());
+            double discountValue = Double.parseDouble(data.getDiscountValue());
+            long discountPrice =(long)(originalValue - (originalValue/100 * discountValue));
             String discPrice = context.getResources().getString(R.string.Rs)+" "+discountPrice;
             holder.txtDiscPrice.setText(discPrice);
         }else{

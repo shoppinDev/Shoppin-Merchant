@@ -153,9 +153,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             spannable.setSpan(STRIKE_THROUGH_SPAN, 0, orgPrice.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             if(object.getString("discounttype").equals("1")){
-                long originalValue = Long.parseLong(object.getString("dealamount"));
-                long discountValue = Long.parseLong(object.getString("discountvalue"));
-                long discountPrice = originalValue - (originalValue/100 * discountValue);
+                double originalValue = Double.parseDouble(object.getString("dealamount"));
+                double discountValue = Double.parseDouble(object.getString("discountvalue"));
+                long discountPrice = (long) (originalValue - (originalValue/100 * discountValue));
+                Log.v("Notification","Discount price : "+discountPrice+" Original value divison : "+(originalValue/100 * discountValue)+" Discount value "+discountValue);
                 String discPrice = this.getResources().getString(R.string.Rs)+" "+discountPrice;
                 tvDealDiscValue.setText(discPrice);
             }else{

@@ -531,7 +531,7 @@ public class AddDealFragment extends Fragment {
                     new AddDealTask(shopId,selectedCategory,selectedSubCategory,etDealTitle.getText().toString(),
                             etDescription.getText().toString(),etStartDate.getText().toString()+" "+etStartTime.getText().toString(),
                             etEndDate.getText().toString()+" "+etEndTime.getText().toString(),
-                            days,selectedDealUsage,selectedDealLocation,"1",etOffPrice.getText().toString(),etOrgPrice.getText().toString()).execute();
+                            days,selectedDealUsage,selectedDealLocation,"1",etDiscPrice.getText().toString(),etOrgPrice.getText().toString()).execute();
                 }
             }
         });
