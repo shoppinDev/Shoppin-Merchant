@@ -137,9 +137,26 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     public void updateDetail(final JSONObject object) {
         try {
+
             tvDealTitle.setText(object.getString("dealtitle"));
             tvShopName.setText(object.getString("shopname"));
-            tvShopDistance.setText("1.5 km");
+
+            if(!object.isNull("distance")) {
+                if (!object.getString("distance").equals("")) {
+                    if (Float.parseFloat(object.getString("distance")) < 10.0) {
+                        String distance = String.format("%.1f", Float.parseFloat(object.getString("distance")));
+                        tvShopDistance.setText(distance + " Km");
+                    } else {
+                        tvShopDistance.setText("0.0 Km");
+                    }
+                    tvShopDistance.setVisibility(View.VISIBLE);
+                } else {
+                    tvShopDistance.setVisibility(View.GONE);
+                }
+            }else{
+                tvShopDistance.setVisibility(View.GONE);
+            }
+
             tvShopAddress.setText(object.getString("shop_addres"));
             tvDealDesc.setText(object.getString("dealdescription"));
             //tvDealDiscValue.setText(object.getString("discountvalue"));
@@ -164,10 +181,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 tvDealDiscValue.setText(discPrice);
             }
 
-
             final double latitude = Double.parseDouble(object.getString("shop_latitude"));
             final double longitude = Double.parseDouble(object.getString("shop_longitude"));
-
             // Gets to GoogleMap from the MapView and does initialization stuff
             mapView.getMapAsync(new OnMapReadyCallback() {
                 @Override
@@ -195,7 +210,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                             .draggable(true));
                 }
             });
-
             mapView.onResume();
         } catch (JSONException je) {
             je.printStackTrace();

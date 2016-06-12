@@ -174,6 +174,16 @@ public class InActiveFragment extends Fragment {
             inputArray.add(new BasicNameValuePair("webmethod", "deactive_my_deal"));
             inputArray.add(new BasicNameValuePair("merchantid", ModuleClass.MERCHANT_ID));
 
+            double latitude = 0.0000;
+            double longitude = 0.0000;
+            if(MainActivity.mCurrentLocation != null){
+                inputArray.add(new BasicNameValuePair("long",""+MainActivity.mCurrentLocation.getLongitude()));
+                inputArray.add(new BasicNameValuePair("lat",""+MainActivity.mCurrentLocation.getLatitude()));
+            }else{
+                inputArray.add(new BasicNameValuePair("lat",""+latitude));
+                inputArray.add(new BasicNameValuePair("long",""+longitude));
+            }
+
             JSONObject responseJSON = new JSONParser().makeHttpRequest(ModuleClass.LIVE_API_PATH+"merchant.php", "GET", inputArray);
             Log.d("Deal List ", responseJSON.toString());
 
@@ -188,7 +198,6 @@ public class InActiveFragment extends Fragment {
                     e.printStackTrace();
                     responseError = "There is some problem in server connection";
                 }
-
             }else{
                 success = false;
                 responseError = "There is some problem in server connection";
@@ -241,7 +250,7 @@ public class InActiveFragment extends Fragment {
                 );
 
                 data.setCountRedeem(object.getString("count_redeem"));
-
+                //data.setShopDistance(object.getString("distance"));
                 dataList.add(data);
             }
         } catch (JSONException e) {

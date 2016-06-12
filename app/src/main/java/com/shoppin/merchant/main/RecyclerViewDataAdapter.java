@@ -69,7 +69,24 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final DealDataModel data = dataList.get(position);
-        //holder.txtDistance.setText(data.getDistance());
+
+        if(data.getShopDistance() != null) {
+            if (!data.getShopDistance().equals("")) {
+                if (Float.parseFloat(data.getShopDistance()) < 10.0) {
+                    String distance = String.format("%.1f", Float.parseFloat(data.getShopDistance()));
+                    holder.txtDistance.setText(distance + " Km");
+                } else {
+                    //String distance = String.format("%.1f", Float.parseFloat(data.getShopDistance()));
+                    holder.txtDistance.setText("0.0 Km");
+                }
+                holder.txtDistance.setVisibility(View.VISIBLE);
+            } else {
+                holder.txtDistance.setVisibility(View.GONE);
+            }
+        }else{
+            holder.txtDistance.setVisibility(View.GONE);
+        }
+
         holder.txtDealTitle.setText(data.getDealTitle());
         holder.txtDealEnd.setText(getDiffTime(data.getDealEndDate()));
         holder.txtShopName.setText(data.getShopName());

@@ -103,8 +103,8 @@ public class StarredFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(ModuleClass.isInternetOn)
-            new GetStarredTask().execute();
+        /*if(ModuleClass.isInternetOn)
+            new GetStarredTask().execute();*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event

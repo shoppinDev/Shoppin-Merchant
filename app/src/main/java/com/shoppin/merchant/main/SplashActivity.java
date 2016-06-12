@@ -1,5 +1,6 @@
 package com.shoppin.merchant.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -45,7 +46,6 @@ public class SplashActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -121,9 +121,9 @@ public class SplashActivity extends AppCompatActivity {
                     });
                 }else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                     Log.v("Notification", "Asking for Permissions...");
-
+                    Log.v("Notification","Write Setting permission : "+checkSelfPermission(Manifest.permission.WRITE_SETTINGS));
+                    Log.v("Notification","Can Write : "+Settings.System.canWrite(SplashActivity.this));
                     if (!Settings.System.canWrite(SplashActivity.this)) {
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
