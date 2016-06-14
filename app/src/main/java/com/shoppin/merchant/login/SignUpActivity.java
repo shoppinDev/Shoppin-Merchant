@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,10 @@ public class SignUpActivity extends AppCompatActivity {
         etFullName = (EditText) findViewById(R.id.input_fullname);
         etMobileNumber = (EditText) findViewById(R.id.input_mobile_number);
 
+        //Bug Fix 50 Add Max length to Mobile Number Input (Also added in XML file)
+        int maxLength = 10;
+        etMobileNumber.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+
         tilEmailId = (TextInputLayout) findViewById(R.id.input_layout_email);
         tilPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
         tilConfPassword = (TextInputLayout) findViewById(R.id.input_layout_conf_password);
@@ -54,44 +59,37 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(etEmailId.getText().toString().equals("")){
-                    //tilEmailId.setError("“Please enter your email address");
                     Toast.makeText(SignUpActivity.this,"Please enter your email address",Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                if(!isEmailValid(etEmailId.getText().toString())){
+                    Toast.makeText(SignUpActivity.this,"Email Address is incorrect",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(etPassword.getText().toString().equals("")){
-                    //tilPassword.setError("Please enter your password");
                     Toast.makeText(SignUpActivity.this,"Please enter your password",Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if(etConfPassword.getText().toString().equals("")){
-                    //tilConfPassword.setError("Please enter a confirm password");
                     Toast.makeText(SignUpActivity.this,"Please enter a confirm password",Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                if(!etPassword.getText().toString().equals(etConfPassword.getText().toString())){
+                    Toast.makeText(SignUpActivity.this,"Password not match",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(etFullName.getText().toString().equals("")){
-                    //tilConfPassword.setError("Please enter a confirm password");
                     Toast.makeText(SignUpActivity.this,"Please enter a Full Name",Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if(etMobileNumber.getText().toString().equals("")){
-                    //tilConfPassword.setError("Please enter a confirm password");
                     Toast.makeText(SignUpActivity.this,"Please enter a Mobile number",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(!etPassword.getText().toString().equals(etConfPassword.getText().toString())){
-                    //tilConfPassword.setError("Password not match");
-                    Toast.makeText(SignUpActivity.this,"Password not match",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(!isEmailValid(etEmailId.getText().toString())){
-                    //tilEmailId.setError("Email Address is incorrect");
-                    Toast.makeText(SignUpActivity.this,"Email Address is incorrect",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -107,8 +105,6 @@ public class SignUpActivity extends AppCompatActivity {
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
-                startActivity(intent);*/
                 Toast.makeText(SignUpActivity.this,"Not Implemented yet",Toast.LENGTH_LONG).show();
             }
         });

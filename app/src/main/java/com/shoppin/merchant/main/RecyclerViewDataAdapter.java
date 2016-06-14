@@ -70,6 +70,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
         final DealDataModel data = dataList.get(position);
 
+        // Bug fix 45 Added Distance in Deal list
         if(data.getShopDistance() != null) {
             if (!data.getShopDistance().equals("")) {
                 if (Float.parseFloat(data.getShopDistance()) < 10.0) {

@@ -276,6 +276,7 @@ public class AddDealFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                // Validation for Discount percentage not more than 100
                 if (!etDiscOffr.getText().toString().equals("")) {
                     int discount = Integer.parseInt(etDiscOffr.getText().toString());
                     if (discount > 100) {

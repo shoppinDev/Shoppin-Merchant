@@ -328,6 +328,7 @@ public class EditDealFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                // Validation for Discount percentage not more than 100
                 if (!etDiscOffr.getText().toString().equals("")) {
                     int discount = Integer.parseInt(etDiscOffr.getText().toString());
                     if (discount > 100) {
@@ -480,16 +481,6 @@ public class EditDealFragment extends Fragment {
                     Toast.makeText(getActivity(), "Deal Title should not be empty", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-               /*if(etDiscPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Discount Price field should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }*/
-
-                /*if(etDealPrice.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Deal Price field should not be empty",Toast.LENGTH_LONG).show();
-                    return;
-                }*/
 
                 if (etStartTime.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Start time field should not be empty", Toast.LENGTH_LONG).show();

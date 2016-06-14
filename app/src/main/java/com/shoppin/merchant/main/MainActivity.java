@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             Log.v("Notification", "GPS is Enable");
         }
 
-
+        //Location Access Permission above Lollipop version
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {

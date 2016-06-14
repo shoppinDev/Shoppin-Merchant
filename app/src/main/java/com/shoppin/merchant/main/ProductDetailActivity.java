@@ -141,6 +141,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             tvDealTitle.setText(object.getString("dealtitle"));
             tvShopName.setText(object.getString("shopname"));
 
+            // Bug Fixes Added distance in Deal Detail screen
             if(!object.isNull("distance")) {
                 if (!object.getString("distance").equals("")) {
                     if (Float.parseFloat(object.getString("distance")) < 10.0) {
