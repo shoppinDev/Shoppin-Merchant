@@ -603,8 +603,8 @@ public class MainActivity extends AppCompatActivity
             editor.remove(ModuleClass.KEY_MERCHANT_ID);
             editor.remove(ModuleClass.KEY_MERCHANT_NAME);
             editor.commit();
-            //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
             MainActivity.this.finish();
             /*if(Build.VERSION.SDK_INT > 15)
                 this.finishAffinity();
