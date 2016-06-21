@@ -73,13 +73,13 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         // Bug fix 45 Added Distance in Deal list
         if(data.getShopDistance() != null) {
             if (!data.getShopDistance().equals("")) {
-                if (Float.parseFloat(data.getShopDistance()) < 10.0) {
+                //if (Float.parseFloat(data.getShopDistance()) < 10.0) {
                     String distance = String.format("%.1f", Float.parseFloat(data.getShopDistance()));
                     holder.txtDistance.setText(distance + " Km");
-                } else {
+                /*} else {
                     //String distance = String.format("%.1f", Float.parseFloat(data.getShopDistance()));
                     holder.txtDistance.setText("0.0 Km");
-                }
+                }*/
                 holder.txtDistance.setVisibility(View.VISIBLE);
             } else {
                 holder.txtDistance.setVisibility(View.GONE);

@@ -144,12 +144,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             // Bug Fixes Added distance in Deal Detail screen
             if(!object.isNull("distance")) {
                 if (!object.getString("distance").equals("")) {
-                    if (Float.parseFloat(object.getString("distance")) < 10.0) {
+                    //if (Float.parseFloat(object.getString("distance")) < 10.0) {
                         String distance = String.format("%.1f", Float.parseFloat(object.getString("distance")));
                         tvShopDistance.setText(distance + " Km");
-                    } else {
+                    /*} else {
                         tvShopDistance.setText("0.0 Km");
-                    }
+                    }*/
                     tvShopDistance.setVisibility(View.VISIBLE);
                 } else {
                     tvShopDistance.setVisibility(View.GONE);
