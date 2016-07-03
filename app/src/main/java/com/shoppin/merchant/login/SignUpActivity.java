@@ -100,7 +100,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
         btnFacebook = (Button) findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,18 +172,14 @@ public class SignUpActivity extends AppCompatActivity {
                             success = false;
                             responseError = object.getString("message");
                         }
-
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }else{
                 success = false;
                 responseError = "There is some problem in server connection";
             }
-
             return null;
         }
 

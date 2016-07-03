@@ -119,6 +119,14 @@ public class LoginActivity extends AppCompatActivity {
 
         switchRemember = (SwitchCompat) findViewById(R.id.switchRemember);
         switchRemember.setChecked(true);
+
+        if(!ModuleClass.appPreferences.getString(ModuleClass.KEY_MERCHANT_EMAIL,"").equals("")){
+            etEmailId.setText(ModuleClass.appPreferences.getString(ModuleClass.KEY_MERCHANT_EMAIL,""));
+        }
+
+        if(!ModuleClass.appPreferences.getString(ModuleClass.KEY_PASSWORD,"").equals("")){
+            etPassword.setText(ModuleClass.appPreferences.getString(ModuleClass.KEY_PASSWORD,""));
+        }
     }
 
     @Override
@@ -188,9 +196,13 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putBoolean(ModuleClass.KEY_IS_REMEMBER,isRememberMe);
                             editor.putString(ModuleClass.KEY_MERCHANT_ID,object.getString("userid"));
                             editor.putString(ModuleClass.KEY_MERCHANT_NAME,object.getString("username"));
-                            editor.commit();
                             ModuleClass.MERCHANT_ID = object.getString("userid");
                             ModuleClass.MERCHANT_NAME = object.getString("username");
+                            if(isRememberMe) {
+                                editor.putString(ModuleClass.KEY_MERCHANT_EMAIL, email);
+                                editor.putString(ModuleClass.KEY_PASSWORD, password);
+                            }
+                            editor.commit();
                         }else{
                             success = false;
                             responseError = object.getString("message");

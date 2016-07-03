@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email Address"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textEmailAddress|textCapSentences"
                     android:textColor="@color/textColor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -120,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Full Name"
-                    android:inputType="text"
+                    android:inputType="text|textCapSentences"
                     android:textColor="@color/textColor" />
 
             </android.support.design.widget.TextInputLayout>

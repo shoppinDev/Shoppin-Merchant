@@ -32,6 +32,8 @@ public class ModuleClass {
     public static String KEY_IS_REMEMBER = "key_is_remember";
     public static String KEY_MERCHANT_ID = "key_merchant_id";
     public static String KEY_MERCHANT_NAME = "key_merchant_name";
+    public static String KEY_MERCHANT_EMAIL = "key_merchant_email";
+    public static String KEY_PASSWORD = "key_password";
 
     public static double locationLatitude = 0.0;
     public static double locationLongitude = 0.0;

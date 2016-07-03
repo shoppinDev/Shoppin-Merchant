@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="@dimen/login_logo_width"
+        android:layout_height="@dimen/login_logo_height"
         android:src="@drawable/icon_logo"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"/>
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email Address"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textCapSentences"
                 android:textColor="@color/textColor"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -70,7 +70,7 @@
                 android:id="@+id/tvForget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forget?"
+                android:text="Forgot?"
                 android:layout_gravity="center|end"
                 android:gravity="center_vertical"
                 android:layout_marginRight="20dp"
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="remember me"
+                android:text="Remember Me"
                 android:paddingLeft="10dp"
                 android:textSize="16sp"
                 android:textColor="@color/textColor"
@@ -136,13 +136,13 @@
             android:layout_marginRight="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="or login using"
+                android:text="Or Login Using"
                 android:textSize="14sp"
                 android:layout_gravity="center_horizontal"
                 />

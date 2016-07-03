@@ -30,4 +30,6 @@
     <dimen name="actionbarStyleMinWidth">0dip</dimen>
     <dimen name="actionbarStylePadLeft">5dip</dimen>
     <dimen name="actiobarStylePadRight">5dip</dimen>
+
+    <dimen name="login_logo_height_width">140dp</dimen>
 </resources>
