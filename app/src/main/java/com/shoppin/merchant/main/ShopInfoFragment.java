@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,6 +115,9 @@ public class ShopInfoFragment extends Fragment {
         etState = (EditText) view.findViewById(R.id.input_state);
         etZipCode = (EditText) view.findViewById(R.id.input_zip);
 
+        int maxLength = 10;
+        etMobile.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+
         btnAddShop = (Button) view.findViewById(R.id.btnAddShop);
         btnAddShop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,12 +133,6 @@ public class ShopInfoFragment extends Fragment {
                     return;
                 }
 
-                if(etMobile.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Please enter a Contact number",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-
                 if(etEmailId.getText().toString().equals("")){
                     Toast.makeText(getActivity(),"Please enter a Email address",Toast.LENGTH_LONG).show();
                     return;
@@ -145,8 +143,13 @@ public class ShopInfoFragment extends Fragment {
                     return;
                 }
 
-                if(etCity.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Please enter a City",Toast.LENGTH_LONG).show();
+                if(etMobile.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Please enter a Contact number",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(etCountry.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Please enter a Country",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -155,8 +158,8 @@ public class ShopInfoFragment extends Fragment {
                     return;
                 }
 
-                if(etCountry.getText().toString().equals("")){
-                    Toast.makeText(getActivity(),"Please enter a Country",Toast.LENGTH_LONG).show();
+                if(etCity.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"Please enter a City",Toast.LENGTH_LONG).show();
                     return;
                 }
 

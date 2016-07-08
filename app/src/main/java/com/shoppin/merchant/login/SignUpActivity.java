@@ -167,6 +167,8 @@ public class SignUpActivity extends AppCompatActivity {
                             ModuleClass.MERCHANT_ID = object.getString("userid");
                             SharedPreferences.Editor editor = ModuleClass.appPreferences.edit();
                             editor.putString(ModuleClass.KEY_MERCHANT_ID,object.getString("userid"));
+                            ModuleClass.MERCHANT_NAME = fullName;
+                            editor.putString(ModuleClass.KEY_MERCHANT_NAME,fullName);
                             editor.commit();
                         }else{
                             success = false;

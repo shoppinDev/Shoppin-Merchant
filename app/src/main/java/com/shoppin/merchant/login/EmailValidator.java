@@ -2,8 +2,6 @@ package com.shoppin.merchant.login;
 
 import android.util.Patterns;
 
-import javax.mail.internet.InternetAddress;
-
 public class EmailValidator {
 
     public static final boolean isValidEmail(String paramString) {

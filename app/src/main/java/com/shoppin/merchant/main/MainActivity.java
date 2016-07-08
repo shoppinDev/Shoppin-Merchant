@@ -602,6 +602,8 @@ public class MainActivity extends AppCompatActivity
             editor.remove(ModuleClass.KEY_IS_REMEMBER);
             editor.remove(ModuleClass.KEY_MERCHANT_ID);
             editor.remove(ModuleClass.KEY_MERCHANT_NAME);
+            ModuleClass.MERCHANT_NAME = null;
+            ModuleClass.MERCHANT_ID = null;
             editor.commit();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);

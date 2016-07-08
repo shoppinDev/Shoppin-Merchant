@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location Latitude"
-                android:inputType="textEmailAddress"
+                android:inputType="numberDecimal"
                 android:textColor="@color/textColor" />
 
         </android.support.design.widget.TextInputLayout>
@@ -102,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location Longitude"
-                android:inputType="textEmailAddress"
+                android:inputType="numberDecimal"
                 android:textColor="@color/textColor" />
 
         </android.support.design.widget.TextInputLayout>
@@ -137,7 +137,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contact Number"
-                android:inputType="number"
+                android:inputType="phone"
+                android:maxLength="10"
                 android:textColor="@color/textColor" />
 
         </android.support.design.widget.TextInputLayout>
@@ -154,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Country"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:textColor="@color/textColor" />
 
         </android.support.design.widget.TextInputLayout>
@@ -206,6 +207,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Zip Code"
                 android:inputType="number"
+                android:maxLength="6"
                 android:textColor="@color/textColor" />
 
         </android.support.design.widget.TextInputLayout>
